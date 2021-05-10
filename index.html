@@ -326,6 +326,29 @@
 	</table>
 	<hr>
 
+	<table align=center width=900px>
+		<tr>
+			<td width=400px>
+				<left>
+					<center><h1>Experiments</h1></center>
+					We train our method on approx. 10% of GTAV dataset and evaluate on cityscapes data. [Dataset stats: num of images, epochs trained for etc.]
+				</left>
+			</td>
+		</tr>
+		<tr>
+			<td><center><img src="./resources/performance_miou.png"/></center></td>
+		</tr>
+		<tr>
+			<td width=400px>
+				<left>
+					<center><h2>Quantitative results</h2></center>
+					We compare our method with the baseline which learns semantic segmentation on GTA V and naively transfers to cityscapes in the first column. SAFL outperforms this baseline as seen with the second and third column. Adding adversarial loss improves performance over just using reconstruction. However, we found that removing the reconstruction auxiliary output and just doing segmentation with adversarial loss does better (in the 4th and 5th cols). The last column shows the oracle performance which is the deeplab network trained on cityscapes data.
+				</left>
+			</td>
+		</tr>
+	</table>
+	<hr>
+
 	<br>
 
 	<table align=center width=900px>
