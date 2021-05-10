@@ -289,6 +289,67 @@
 
 	<hr>
 	<br>
+	<table align=center width=900px>
+		<tr>
+			<td width=400px>
+				<left>
+					<center><h1>Loss function</h1></center>
+					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both sim and real domain.</p>
+
+					<p>We formulate this task to adapt from GTA V data to cityscapes data as the following loss function:</p>
+					L = lambda_seg * L_seg + lambda_rec * L_rec + lambda_adv * L_adv
+					<br>
+					<p>where L_seg is the segmentation loss for synthetic data, L_rec is the reconstruction loss for the real images and L_adv is the adversarial loss from the discriminator. The different losses are weighted with hyperparameters lambda_seg, lambda_rec and lambda_adv. </p>
+				</left>
+			</td>
+		</tr>
+		<tr>
+			<td width=400px>
+				<left>
+					<center><h2>Reconstruction</h2></center>
+					<p>For the reconstruction loss we use an L2 distance between the reconstructed image and target cityscapes image.</p>
+					L_rec = ||F(x) - x||^2_2</br>
+				</left>
+			</td>
+		</tr>
+		<tr>
+			<td width=400px>
+				<left>
+					<center><h2>Adversarial loss</h2></center>
+					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes as input image features and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features so the discriminator is fooled.</p>
+					L_adv = minimize (D(z) – 1)^2</br>
+					<p>Where z is the image features, D is the discriminator</p>
+					<p>This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
+				</left>
+			</td>
+		</tr>
+	</table>
+	<hr>
+
+	<table align=center width=900px>
+		<tr>
+			<td width=400px>
+				<left>
+					<center><h1>Experiments</h1></center>
+					We train our method on approx. 10% of GTAV dataset and evaluate on cityscapes data. [Dataset stats: num of images, epochs trained for etc.]
+				</left>
+			</td>
+		</tr>
+		<tr>
+			<td><center><img src="./resources/performance_miou.png"/></center></td>
+		</tr>
+		<tr>
+			<td width=400px>
+				<left>
+					<center><h2>Quantitative results</h2></center>
+					We compare our method with the baseline which learns semantic segmentation on GTA V and naively transfers to cityscapes in the first column. SAFL outperforms this baseline as seen with the second and third column. Adding adversarial loss improves performance over just using reconstruction. However, we found that removing the reconstruction auxiliary output and just doing segmentation with adversarial loss does better (in the 4th and 5th cols). The last column shows the oracle performance which is the deeplab network trained on cityscapes data.
+				</left>
+			</td>
+		</tr>
+	</table>
+	<hr>
+
+	<br>
 
 	<table align=center width=900px>
 		<tr>
