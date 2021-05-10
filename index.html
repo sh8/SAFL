@@ -246,23 +246,20 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 
 	<center><h1>Related Work</h1></center>
 
-	<center><h2>Semantic Segmentation</h2></center>
-	<center><h2>Domain Adaptation</h2></center>
-	<center><h2>Adversarial Learning</h2></center>
-	<center><h2>Self-Supervised Feature Learning</h2></center>
+	<table align=center width=850px>
+		<center>
+			<tr>
+				<td>
+		The recent methods for semantic segmentation generally use an encode-decoder architecture like UNet or Deeplab. In this project, our architecture is based on Deeplab. Prior work of semi-supervised semantic segmentation makes use of adversarial learning, image inpainting, as well as, learning features invariant to domain shift.
+				</td>
+			</tr>
+		</center>
+	</table>
 
 	<hr>
 
 	<center><h1>Proposed Method (SAFL)</h1></center>
 
-	<table align=center width=420px>
-		<center>
-			<tr>
-				<td>
-				</td>
-			</tr>
-		</center>
-	</table>
 	<table align=center width=400px>
 		<tr>
 			<td align=center width=400px>
@@ -320,7 +317,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 					<center><h3>Adversarial loss</h3></center>
 					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes as input image features and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features so the discriminator is fooled.</p>
 					$$L_{adv} = ||D(z) – 1||^2_2$$</br>
-					<p>Where z is the image features, D is the discriminator</p>
+					<p>where z is the image features, D is the discriminator.</p>
 					<p>This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
 				</left>
 			</td>
