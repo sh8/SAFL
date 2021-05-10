@@ -203,7 +203,7 @@
 		<center><h1>Abstract</h1></center>
 		<tr>
 			<td>
-				We propose a novel domain adaptation method, SAFL for semantic segmentation. SAFL learns the features of the source and target domains simullteneously. It is important to The intuition of SAFL is, by 
+				We propose a novel domain adaptation method, SAFL for semantic segmentation. Assuming we only have an access to ground-truth segmentation maps in a source domain, SAFL learns the features of the source (synthetic) and target (real) domains in a supervised and self-supervised manner respectively. For self-supervised training, we use image reconstruction to learn the features of the target domain without ground-truth labels. Our experimental results show that the self-supervised training via image reconstruction in the target domain helps our method improve the mIoU score in semantic segmentation significantly.
 			</td>
 		</tr>
 	</table>
@@ -258,8 +258,6 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		</center>
 	</table>
 
-	<center><h2>Reconstruction</h2></center>
-	<center><h2>Adversarial Loss</h2></center>
 	<!-- <table align=center width=800px> -->
 	<!-- 	<br> -->
 	<!-- 	<tr><center> -->
@@ -267,17 +265,11 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 	<!-- 		</center> -->
 	<!-- 	</span> -->
 	<!-- </table> -->
-	<br>
-	<hr>
-
-	<center><h1>Discussion</h1></center>
-	<hr>
-	<br>
-	<table align=center width=900px>
+	<center><h2>Training</h2></center>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h1>Loss function</h1></center>
 					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both sim and real domain.</p>
 
 					<p>We formulate this task to adapt from GTA V data to cityscapes data as the following loss function:</p>
@@ -290,7 +282,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h2>Reconstruction</h2></center>
+					<center><h3>Reconstruction</h3></center>
 					<p>For the reconstruction loss we use an L2 distance between the reconstructed image and target cityscapes image.</p>
 					L_rec = ||F(x) - x||^2_2</br>
 				</left>
@@ -299,7 +291,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h2>Adversarial loss</h2></center>
+					<center><h3>Adversarial loss</h3></center>
 					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes as input image features and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features so the discriminator is fooled.</p>
 					L_adv = minimize (D(z) – 1)^2</br>
 					<p>Where z is the image features, D is the discriminator</p>
@@ -310,7 +302,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 	</table>
 	<hr>
 
-	<table align=center width=900px>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
@@ -332,9 +324,9 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		</tr>
 	</table>
 	<hr>
-
+	<center><h1>Discussion</h1></center>
+	<hr>
 	<br>
-
 	<center><h1>Future Work</h1></center>
 	<hr>
 
