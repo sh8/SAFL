@@ -385,10 +385,24 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 			</td>
 		</tr>
 	</table>
-
 	<hr>
-
+	<center><h1>Qualitative results</h1></center>
+	<hr>
+	<center><h1>Discussion</h1></center>
+	<table align=center width=900px>
+		<tr>
+			<td width=400px>
+				<left>
+					We found that adding adversarial learning improves the performance of adaptive segmentation. However, when comparing SAFL with adversarial loss with deeplab with adversarial loss, it seems that reconstruction may not be the best self-supervised task to learn a good representation. Looking at the per class IOUs we see that some classes, such as train, bycycle, are particularly difficult. This is probably due to the classes having few examples in the GTA5 dataset. Another challenge is memory limitation. We have to use smaller batch size and resized images during training to avoid running out of memory which can lead to less stable training and worse per pixel accuracy.
+				</left>
+			</td>
+		</tr>
+	</table>
+	<hr>
 	<br>
+	<center><h1>Future Work</h1></center>
+	We currently use a features from the final layer of the resnet backbone before the ASPP layers for feature space adversarial loss. We can use different intermediate features to see how it affects performance. Also, using different auxillary task than reconstruction could be more suited to this domain adaptation task. For example, we can investigate tasks such as denoising or inpainting. Similarly, we can use contrastive learning methods to learn good representation. Finally, we can use a loss that more directly optimzes the mean IOU with respect to class imbalance. We leave these experiments as future work.
+	<hr>
 
 	<center><h1>Future Work</h1></center>
 	<hr>
