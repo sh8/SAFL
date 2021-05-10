@@ -1,5 +1,7 @@
 <script src="http://www.google.com/jsapi" type="text/javascript"></script> 
 <script type="text/javascript">google.load("jquery", "1.3.2");</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style type="text/css">
 	body {
@@ -315,7 +317,7 @@
 					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both sim and real domain.</p>
 
 					<p>We formulate this task to adapt from GTA V data to cityscapes data as the following loss function:</p>
-					L = lambda_seg * L_seg + lambda_rec * L_rec + lambda_adv * L_adv
+					$$L = \lambda_{seg} L_{seg} + \lambda_{rec} L_{rec} + \lambda_{adv} L_{adv}$$
 					<br>
 					<p>where L_seg is the segmentation loss for synthetic data, L_rec is the reconstruction loss for the real images and L_adv is the adversarial loss from the discriminator. The different losses are weighted with hyperparameters lambda_seg, lambda_rec and lambda_adv. </p>
 				</left>
@@ -326,7 +328,7 @@
 				<left>
 					<center><h2>Reconstruction</h2></center>
 					<p>For the reconstruction loss we use an L2 distance between the reconstructed image and target cityscapes image.</p>
-					L_rec = ||F(x) - x||^2_2</br>
+					$$L_{rec} = ||F(x) - x||^2_2$$</br>
 				</left>
 			</td>
 		</tr>
@@ -335,7 +337,7 @@
 				<left>
 					<center><h2>Adversarial loss</h2></center>
 					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes as input image features and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features so the discriminator is fooled.</p>
-					L_adv = minimize (D(z) – 1)^2</br>
+					$$L_{adv} = ||D(z) – 1||^2_2$$</br>
 					<p>Where z is the image features, D is the discriminator</p>
 					<p>This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
 				</left>
