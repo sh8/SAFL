@@ -203,30 +203,31 @@
 		<center><h1>Abstract</h1></center>
 		<tr>
 			<td>
-				This is my abstract.
+				We propose a novel domain adaptation method, SAFL for semantic segmentation. SAFL learns the features of the source and target domains simullteneously. It is important to The intuition of SAFL is, by 
 			</td>
 		</tr>
 	</table>
 	<br>
 
 	<hr>
-	<center><h1>Talk</h1></center>
-	<p align="center">
-		<iframe width="660" height="395" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
-	</p>
-
-	<table align=center width=800px>
-		<br>
-		<tr>
-			<center>
-				<span style="font-size:28px"><a href=''>[Slides]</a>
-				</span>
-			</center>
-		</tr>
+	<center><h1>Introduction</h1></center>
+	<table align=center width=850px>
+		<center>
+			<tr>
+				<td>
+		Syn2Real is an approach to train a deep neural network (DNN) with only synthetic labeled images and optionally unlabeled real images.
+This approach is gaining popularity due to its potential ability to reduce the need of annotating large quantities of real images. It is especially beneficial for pixel-level tasks such as semantic segmentation and change detection, where labeling is the most time-consuming and labor-intensive.
+Another merit of Syn2Real is its ability to generate synthetic images diverse in weather and illumination conditions. This advantage, for instance, makes it easier for a trained model to deal with rare events like snow, rain, and fog in the field of autonomous driving. However, Syn2Real has a challenge of poor generalization to real images caused by the domain gap between real and synthetic images. To address this problem, many methods have been proposed in recent years such as unsupervised domain adaptation (DA), unsupervised representation learning, and learning from noisy or pseudo labels. Generally, unsupervised DA and representation learning train the network to make the feature distributions of the target and source domain closer. However, aligning the real (target) domain to the synthetic (source) domain distribution is an ill-posed problem because the real domain is significantly more complex and contains many more objects and nuisances. Learning from noisy labels is the latest approach in domain adaptation and achieves promising results. However, training with pseudo-labels can be unstable and often requires special tuning to avoid degeneration. To achieve stable training while maintaining high accuracy, we propose Self-Supervised Auxiliary Feature Learning (SAFL) --- a novel network architecture which learns domain adaptive features for semantic segmentation through the training of self-supervised image inpainting of unlabeled real images. We hypothesize that the task of self-supervised learning on real images acts as a strong regularizer for the network to perform well in both the source and target domains. To evaluate our method, we plan to conduct experiments of domain adaptive segmentation using the GTAV (synthetic) and Cityscapes (real) datasets.
+				</td>
+			</tr>
+		</center>
 	</table>
 	<hr>
 
-	<center><h1>Code</h1></center>
+	<center><h1>Related Work</h1></center>
+	<hr>
+
+	<center><h1>Proposed Method (SAFL)</h1></center>
 
 	<table align=center width=420px>
 		<center>
@@ -240,53 +241,36 @@
 		<tr>
 			<td align=center width=400px>
 				<center>
-					<td><img class="round" style="width:450px" src="./resources/method_diagram.png"/></td>
+					<td><img class="round" style="width:800px" src="./resources/method_diagram.png"/></td>
 				</center>
 			</td>
 		</tr>
 	</table>
+	
+	<center><h2>Architecture</h2></center>
 	<table align=center width=850px>
 		<center>
 			<tr>
 				<td>
-					Short description if wanted
+					We show a high-level overview of SAFL in the figure above. The network architecture is really simple. SAFL is composed of four subnetworks: an encoder, a semantic segmentation decoder, an image inpainting decoder, and a discriminator. The encoder is based on the the ResNet-101 backbone and the decoder is based on the DeepLabV3 semantic segmentation architecture. During training, all images are fed into the encoder first, and then the encoded feature is given to two decoders to predict the semantic segmentation or image painting. The discriminator network is used to align the distributions of the features between the synthetic and real images. We plan to perform some ablation studies to show the effectiveness of SAFL: 1) Remove the discriminator, 2) Use 2D image reconstruction instead of image inpainting, 3) Use a different backbone network like ResNext or a Transformer 4) Train using additional in-the-wild city images. We aim to achieve state of the art results with our unified but simple method for adaptive semantic segmentation.
 				</td>
 			</tr>
 		</center>
 	</table>
-	<table align=center width=800px>
-		<br>
-		<tr><center>
-			<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/webpage-template'>[GitHub]</a>
-			</center>
-		</span>
-	</table>
+
+	<center><h2>Reconstruction</h2></center>
+	<center><h2>Adversarial Loss</h2></center>
+	<!-- <table align=center width=800px> -->
+	<!-- 	<br> -->
+	<!-- 	<tr><center> -->
+	<!-- 		<span style="font&#45;size:28px">&#38;nbsp;<a href='https://github.com/richzhang/webpage&#45;template'>[GitHub]</a> -->
+	<!-- 		</center> -->
+	<!-- 	</span> -->
+	<!-- </table> -->
 	<br>
 	<hr>
-	<table align=center width=450px>
-		<center><h1>Paper and Supplementary Material</h1></center>
-		<tr>
-			<td><a href=""><img class="layered-paper-big" style="height:175px" src="./resources/paper.png"/></a></td>
-			<td><span style="font-size:14pt">F. Author, S. Author, T. Author.<br>
-				<b>Creative and Descriptive Paper Title.</b><br>
-				In Conference, 20XX.<br>
-				(hosted on <a href="">ArXiv</a>)<br>
-				<!-- (<a href="./resources/camera-ready.pdf">camera ready</a>)<br> -->
-				<span style="font-size:4pt"><a href=""><br></a>
-				</span>
-			</td>
-		</tr>
-	</table>
-	<br>
 
-	<table align=center width=600px>
-		<tr>
-			<td><span style="font-size:14pt"><center>
-				<a href="./resources/bibtex.txt">[Bibtex]</a>
-			</center></td>
-		</tr>
-	</table>
-
+	<center><h1>Discussion</h1></center>
 	<hr>
 	<br>
 	<table align=center width=900px>
@@ -351,16 +335,8 @@
 
 	<br>
 
-	<table align=center width=900px>
-		<tr>
-			<td width=400px>
-				<left>
-					<center><h1>Acknowledgements</h1></center>
-					This template was originally made by <a href="http://web.mit.edu/phillipi/">Phillip Isola</a> and <a href="http://richzhang.github.io/">Richard Zhang</a> for a <a href="http://richzhang.github.io/colorization/">colorful</a> ECCV project; the code can be found <a href="https://github.com/richzhang/webpage-template">here</a>.
-				</left>
-			</td>
-		</tr>
-	</table>
+	<center><h1>Future Work</h1></center>
+	<hr>
 
 <br>
 </body>
