@@ -120,19 +120,21 @@
 
 <style type="text/css">
 	table.tableizer-table {
-		font-size: 12px;
+		font-size: 14px;
 		border: 1px solid #CCC; 
-		font-family: Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
 	} 
 	.tableizer-table td {
 		padding: 4px;
 		margin: 3px;
 		border: 1px solid #CCC;
+		text-align: center;
 	}
 	.tableizer-table th {
-		background-color: #104E8B; 
+		padding: 4px;
+		margin: 3px;
+		background-color: black;
 		color: #FFF;
-		font-weight: bold;
 	}
 </style>
 
@@ -250,7 +252,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<center>
 			<tr>
 				<td>
-		The recent methods for semantic segmentation generally use an encode-decoder architecture like UNet or Deeplab. In this project, our architecture is based on Deeplab. Prior work of semi-supervised semantic segmentation makes use of adversarial learning, image inpainting, as well as, learning features invariant to domain shift.
+		Semantic segmentation is a crucial task for safety autonomous driving. The recent methods for semantic segmentation generally use an encode-decoder architecture like UNet or Deeplab and its accuracy is improved day by day by using a novel network architecture. However, there is a fundamental problem that annotation cost of pixel-level segmentation maps is really huge. This problem makes it challenging to train a network with a dataset which has many conditions in terms of road types, weathers, and cameras. To solve this problem, semi-supervised semantic segmentation have been studied recently. Prior work of semi-supervised semantic segmentation makes use of adversarial learning, style transfer, pseudo-labeling. In this project, we investigate a novel way to learn features invariant to different domains.
 				</td>
 			</tr>
 		</center>
@@ -293,32 +295,32 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both sim and real domain.</p>
-
-					<p>We formulate this task to adapt from GTA V data to cityscapes data as the following loss function:</p>
-					$$L = \lambda_{seg} L_{seg} + \lambda_{rec} L_{rec} + \lambda_{adv} L_{adv}$$
-					<br>
+					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both sim and real domain. We formulate this task to adapt from GTA V data to cityscapes data as the following loss function:</p>
+					<p>$$L = \lambda_{seg} L_{seg} + \lambda_{rec} L_{rec} + \lambda_{adv} L_{adv}$$</p>
 					<p>where L_seg is the segmentation loss for synthetic data, L_rec is the reconstruction loss for the real images and L_adv is the adversarial loss from the discriminator. The different losses are weighted with hyperparameters lambda_seg, lambda_rec and lambda_adv. </p>
 				</left>
 			</td>
 		</tr>
+	</table>
+	<center><h3>Reconstruction</h3></center>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h3>Reconstruction</h3></center>
 					<p>For the reconstruction loss we use an L2 distance between the reconstructed image and target cityscapes image.</p>
-					$$L_{rec} = ||F(x) - x||^2_2$$</br>
+					$$L_{rec} = ||F(x) - x||^2_2$$
 				</left>
 			</td>
 		</tr>
+	</table>
+	<center><h3>Adversarial loss</h3></center>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h3>Adversarial loss</h3></center>
 					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes as input image features and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features so the discriminator is fooled.</p>
-					$$L_{adv} = ||D(z) – 1||^2_2$$</br>
-					<p>where z is the image features, D is the discriminator.</p>
-					<p>This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
+					$$L_{adv} = ||D(z) – 1||^2_2$$
+					<p>where z is the image features, D is the discriminator. This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
 				</left>
 			</td>
 		</tr>
@@ -350,25 +352,26 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 	<br>
 	<table class="tableizer-table" align=center>
 	<thead><tr class="tableizer-firstrow"><th>Class</th><th>Baseline</th><th>SAFL</th><th>Deeplab + seg adv</th><th>Deeplab + feat adv</th><th>Oracle</th></tr></thead><tbody>
-	 <tr><td>road</td><td>12.73</td><td>87.25</td><td>85.12</td><td>91.527</td><td>93.06</td></tr>
-	 <tr><td>sidewalk</td><td>19.98</td><td>9.99</td><td>1.11</td><td>15.375</td><td>60.34</td></tr>
-	 <tr><td>building</td><td>75.41</td><td>75.64</td><td>76.12</td><td>72.404</td><td>81.57</td></tr>
-	 <tr><td>wall</td><td>15.32</td><td>16.85</td><td>15.95</td><td>1.696</td><td>42.85</td></tr>
-	 <tr><td>fence</td><td>17.68</td><td>3.74</td><td>12.4</td><td>21.525</td><td>34.05</td></tr>
-	 <tr><td>pole</td><td>16.99</td><td>12.6</td><td>17.86</td><td>18.886</td><td>15.97</td></tr>
-	 <tr><td>traffic light</td><td>18.1</td><td>14.86</td><td>18.93</td><td>22.642</td><td>29.24</td></tr>
-	 <tr><td>traffic sign</td><td>12.65</td><td>3.66</td><td>7.47</td><td>17.379</td><td>36.44</td></tr>
-	 <tr><td>vegetation</td><td>77.83</td><td>76.1</td><td>77.27</td><td>81.499</td><td>81.1</td></tr>
-	 <tr><td>terrain</td><td>11.43</td><td>27.57</td><td>24.65</td><td>33.558</td><td>45.25</td></tr>
-	 <tr><td>sky</td><td>77.74</td><td>69.59</td><td>71.42</td><td>55.217</td><td>82.27</td></tr>
-	 <tr><td>person</td><td>31.88</td><td>33.01</td><td>40.42</td><td>35.463</td><td>47.24</td></tr>
-	 <tr><td>rider</td><td>0.17</td><td>1.57</td><td>4.99</td><td>23.984</td><td>29.44</td></tr>
-	 <tr><td>car</td><td>20.01</td><td>71.88</td><td>79.62</td><td>80.481</td><td>76.93</td></tr>
-	 <tr><td>truck</td><td>5.98</td><td>12.49</td><td>26.53</td><td>36.229</td><td>42.83</td></tr>
-	 <tr><td>bus</td><td>8.98</td><td>3.23</td><td>19.07</td><td>16.913</td><td>50.64</td></tr>
+	 <tr><td>road</td><td>12.73</td><td>87.25</td><td>85.12</td><td>91.53</td><td>93.06</td></tr>
+	 <tr><td>sidewalk</td><td>19.98</td><td>9.99</td><td>1.11</td><td>15.38</td><td>60.34</td></tr>
+	 <tr><td>building</td><td>75.41</td><td>75.64</td><td>76.12</td><td>72.40</td><td>81.57</td></tr>
+	 <tr><td>wall</td><td>15.32</td><td>16.85</td><td>15.95</td><td>1.70</td><td>42.85</td></tr>
+	 <tr><td>fence</td><td>17.68</td><td>3.74</td><td>12.4</td><td>21.53</td><td>34.05</td></tr>
+	 <tr><td>pole</td><td>16.99</td><td>12.6</td><td>17.86</td><td>18.89</td><td>15.97</td></tr>
+	 <tr><td>traffic light</td><td>18.1</td><td>14.86</td><td>18.93</td><td>22.64</td><td>29.24</td></tr>
+	 <tr><td>traffic sign</td><td>12.65</td><td>3.66</td><td>7.47</td><td>17.380</td><td>36.44</td></tr>
+	 <tr><td>vegetation</td><td>77.83</td><td>76.1</td><td>77.27</td><td>81.50</td><td>81.1</td></tr>
+	 <tr><td>terrain</td><td>11.43</td><td>27.57</td><td>24.65</td><td>33.56</td><td>45.25</td></tr>
+	 <tr><td>sky</td><td>77.74</td><td>69.59</td><td>71.42</td><td>55.22</td><td>82.27</td></tr>
+	 <tr><td>person</td><td>31.88</td><td>33.01</td><td>40.42</td><td>35.46</td><td>47.24</td></tr>
+	 <tr><td>rider</td><td>0.17</td><td>1.57</td><td>4.99</td><td>23.98</td><td>29.44</td></tr>
+	 <tr><td>car</td><td>20.01</td><td>71.88</td><td>79.62</td><td>80.48</td><td>76.93</td></tr>
+	 <tr><td>truck</td><td>5.98</td><td>12.49</td><td>26.53</td><td>36.23</td><td>42.83</td></tr>
+	 <tr><td>bus</td><td>8.98</td><td>3.23</td><td>19.07</td><td>16.91</td><td>50.64</td></tr>
 	 <tr><td>train</td><td>1.37</td><td>11.29</td><td>0.19</td><td>0</td><td>30.36</td></tr>
-	 <tr><td>motorcycle</td><td>0.73</td><td>0</td><td>9.63</td><td>20.736</td><td>29.02</td></tr>
-	 <tr><td>bicycle</td><td>0.09</td><td>0.72</td><td>0.5</td><td>18.088</td><td>46.68</td></tr>
+	 <tr><td>motorcycle</td><td>0.73</td><td>0</td><td>9.63</td><td>20.74</td><td>29.02</td></tr>
+	 <tr><td>bicycle</td><td>0.09</td><td>0.72</td><td>0.5</td><td>18.09</td><td>46.68</td></tr>
+	 <tr><td>average</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
 	</tbody></table>
 	<br>
 	<table align=center width=850px>
@@ -406,7 +409,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-			We currently use a features from the final layer of the resnet backbone before the ASPP layers for feature space adversarial loss. We can use different intermediate features to see how it affects performance. Also, using different auxillary task than reconstruction could be more suited to this domain adaptation task. For example, we can investigate tasks such as denoising or inpainting. Similarly, we can use contrastive learning methods to learn good representation. Finally, we can use a loss that more directly optimzes the mean IOU with respect to class imbalance. We leave these experiments as future work.
+			We currently use features from the final layer of the resnet backbone before the ASPP layers for feature space adversarial loss. We can use different intermediate features to see how it affects performance. Also, using different auxillary task than reconstruction could be more suited to this domain adaptation task. For example, we can investigate tasks such as denoising or inpainting. Similarly, we can use contrastive learning methods to learn good representation. Finally, we can use a loss that more directly optimzes the mean IOU with respect to class imbalance. We leave these experiments as future work.
 			</td>
 		</tr>
 	</table>
