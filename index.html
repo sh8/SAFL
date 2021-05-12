@@ -218,6 +218,15 @@
 			</tr>
 		</table>
 	</center>
+	<hr>
+
+	<table align=center width=850px>
+		<center><h1>Presentation Video</h1></center>
+	</table>
+	<center>
+	<iframe width="700" height="393" src="https://www.youtube.com/embed/7jDb452Kiw8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	<br>
+	</center>
 
 	<hr>
 
@@ -230,7 +239,6 @@
 		</tr>
 	</table>
 	<br>
-
 	<hr>
 	<center><h1>Introduction</h1></center>
 	<table align=center width=850px>
@@ -252,7 +260,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<center>
 			<tr>
 				<td>
-		Semantic segmentation is a crucial task for safety autonomous driving. The recent methods for semantic segmentation generally use an encode-decoder architecture like UNet [4] or Deeplab [5] and its accuracy is improved day by day by using a novel network architecture. However, there is a fundamental problem that annotation cost of pixel-level segmentation maps is really huge. This problem makes it challenging to train a network with a dataset which has many conditions in terms of road types, weathers, and cameras. To solve this problem, semi-supervised semantic segmentation have been studied recently. Prior work of semi-supervised semantic segmentation makes use of adversarial learning, style transfer, pseudo-labeling [1],[2],[3]. In this project, we investigate a novel way to learn features invariant to different domains.
+		Semantic segmentation is a crucial task for safe autonomous driving. The recent methods for semantic segmentation generally use an encode-decoder architecture like UNet or Deeplab and its accuracy is improved day by day by using a novel network architecture. However, there is a fundamental problem that annotation cost of pixel-level segmentation maps is really huge. This problem makes it challenging to train a network with a dataset which has many conditions in terms of road types, weathers, and cameras. To solve this problem, semi-supervised semantic segmentation have been studied recently. Prior work of semi-supervised semantic segmentation makes use of adversarial learning, style transfer, pseudo-labeling. In this project, we investigate a novel way to learn features invariant to different domains.
 				</td>
 			</tr>
 		</center>
@@ -320,7 +328,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 				<left>
 					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes as input image features and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features so the discriminator is fooled.</p>
 					$$L_{adv} = ||D(z) – 1||^2_2$$
-					<p>where z is the image features, \(D\) is the discriminator. This least squares GAN loss is based on [6] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
+					<p>where z is the image features, \(D\) is the discriminator. This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
 				</left>
 			</td>
 		</tr>
