@@ -120,19 +120,21 @@
 
 <style type="text/css">
 	table.tableizer-table {
-		font-size: 12px;
+		font-size: 14px;
 		border: 1px solid #CCC; 
-		font-family: Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
 	} 
 	.tableizer-table td {
 		padding: 4px;
 		margin: 3px;
 		border: 1px solid #CCC;
+		text-align: center;
 	}
 	.tableizer-table th {
-		background-color: #104E8B; 
+		padding: 4px;
+		margin: 3px;
+		background-color: black;
 		color: #FFF;
-		font-weight: bold;
 	}
 </style>
 
@@ -223,146 +225,130 @@
 		<center><h1>Abstract</h1></center>
 		<tr>
 			<td>
-				This is my abstract.
+				We propose a novel domain adaptation method, SAFL for semantic segmentation. Assuming we only have an access to ground-truth segmentation maps in a source domain, SAFL learns the features of the source (synthetic) and target (real) domains in a supervised and self-supervised manner respectively. For self-supervised training, we use image reconstruction to learn the features of the target domain without ground-truth labels. Our experimental results show that the self-supervised training via image reconstruction in the target domain helps our method improve the mIoU score in semantic segmentation significantly.
 			</td>
 		</tr>
 	</table>
 	<br>
 
 	<hr>
-	<center><h1>Talk</h1></center>
-	<p align="center">
-		<iframe width="660" height="395" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
-	</p>
-
-	<table align=center width=800px>
-		<br>
-		<tr>
-			<center>
-				<span style="font-size:28px"><a href=''>[Slides]</a>
-				</span>
-			</center>
-		</tr>
-	</table>
-	<hr>
-
-	<center><h1>Code</h1></center>
-
-	<table align=center width=420px>
-		<center>
-			<tr>
-				<td>
-				</td>
-			</tr>
-		</center>
-	</table>
-	<table align=center width=400px>
-		<tr>
-			<td align=center width=400px>
-				<center>
-					<td><img class="round" style="width:450px" src="./resources/method_diagram.png"/></td>
-				</center>
-			</td>
-		</tr>
-	</table>
+	<center><h1>Introduction</h1></center>
 	<table align=center width=850px>
 		<center>
 			<tr>
 				<td>
-					Short description if wanted
+		Syn2Real is an approach to train a deep neural network (DNN) with only synthetic labeled images and optionally unlabeled real images.
+This approach is gaining popularity due to its potential ability to reduce the need of annotating large quantities of real images. It is especially beneficial for pixel-level tasks such as semantic segmentation and change detection, where labeling is the most time-consuming and labor-intensive.
+Another merit of Syn2Real is its ability to generate synthetic images diverse in weather and illumination conditions. This advantage, for instance, makes it easier for a trained model to deal with rare events like snow, rain, and fog in the field of autonomous driving. However, Syn2Real has a challenge of poor generalization to real images caused by the domain gap between real and synthetic images. To address this problem, many methods have been proposed in recent years such as unsupervised domain adaptation (DA), unsupervised representation learning, and learning from noisy or pseudo labels. Generally, unsupervised DA and representation learning train the network to make the feature distributions of the target and source domain closer. However, aligning the real (target) domain to the synthetic (source) domain distribution is an ill-posed problem because the real domain is significantly more complex and contains many more objects and nuisances. Learning from noisy labels is the latest approach in domain adaptation and achieves promising results. However, training with pseudo-labels can be unstable and often requires special tuning to avoid degeneration. To achieve stable training while maintaining high accuracy, we propose Self-Supervised Auxiliary Feature Learning (SAFL) --- a novel network architecture which learns domain adaptive features for semantic segmentation through the training of self-supervised image inpainting of unlabeled real images. We hypothesize that the task of self-supervised learning on real images acts as a strong regularizer for the network to perform well in both the source and target domains. To evaluate our method, we plan to conduct experiments of domain adaptive segmentation using the GTAV (synthetic) and Cityscapes (real) datasets.
 				</td>
 			</tr>
 		</center>
 	</table>
-	<table align=center width=800px>
-		<br>
-		<tr><center>
-			<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/webpage-template'>[GitHub]</a>
-			</center>
-		</span>
-	</table>
-	<br>
 	<hr>
-	<table align=center width=450px>
-		<center><h1>Paper and Supplementary Material</h1></center>
+
+	<center><h1>Related Work</h1></center>
+
+	<table align=center width=850px>
+		<center>
+			<tr>
+				<td>
+		Semantic segmentation is a crucial task for safety autonomous driving. The recent methods for semantic segmentation generally use an encode-decoder architecture like UNet [4] or Deeplab [5] and its accuracy is improved day by day by using a novel network architecture. However, there is a fundamental problem that annotation cost of pixel-level segmentation maps is really huge. This problem makes it challenging to train a network with a dataset which has many conditions in terms of road types, weathers, and cameras. To solve this problem, semi-supervised semantic segmentation have been studied recently. Prior work of semi-supervised semantic segmentation makes use of adversarial learning, style transfer, pseudo-labeling [1],[2],[3]. In this project, we investigate a novel way to learn features invariant to different domains.
+				</td>
+			</tr>
+		</center>
+	</table>
+
+	<hr>
+
+	<center><h1>Proposed Method (SAFL)</h1></center>
+
+	<table align=center width=400px>
 		<tr>
-			<td><a href=""><img class="layered-paper-big" style="height:175px" src="./resources/paper.png"/></a></td>
-			<td><span style="font-size:14pt">F. Author, S. Author, T. Author.<br>
-				<b>Creative and Descriptive Paper Title.</b><br>
-				In Conference, 20XX.<br>
-				(hosted on <a href="">ArXiv</a>)<br>
-				<!-- (<a href="./resources/camera-ready.pdf">camera ready</a>)<br> -->
-				<span style="font-size:4pt"><a href=""><br></a>
-				</span>
+			<td align=center width=400px>
+				<center>
+					<td><img class="round" style="width:800px" src="./resources/method_diagram.png"/></td>
+				</center>
 			</td>
 		</tr>
 	</table>
-	<br>
-
-	<table align=center width=600px>
-		<tr>
-			<td><span style="font-size:14pt"><center>
-				<a href="./resources/bibtex.txt">[Bibtex]</a>
-			</center></td>
-		</tr>
+	
+	<center><h2>Architecture</h2></center>
+	<table align=center width=850px>
+		<center>
+			<tr>
+				<td>
+					We show a high-level overview of SAFL in the figure above. The network architecture is really simple. SAFL is composed of four subnetworks: an encoder, a semantic segmentation decoder, an image inpainting decoder, and a discriminator. The encoder is based on the the ResNet-101 backbone and the decoder is based on the DeepLabV3 semantic segmentation architecture. During training, all images are fed into the encoder first, and then the encoded feature is given to two decoders to predict the semantic segmentation or image painting. The discriminator network is used to align the distributions of the features between the synthetic and real images. We plan to perform some ablation studies to show the effectiveness of SAFL: 1) Remove the discriminator, 2) Use 2D image reconstruction instead of image inpainting, 3) Use a different backbone network like ResNext or a Transformer 4) Train using additional in-the-wild city images. We aim to achieve state of the art results with our unified but simple method for adaptive semantic segmentation.
+				</td>
+			</tr>
+		</center>
 	</table>
 
-	<hr>
-	<br>
-	<table align=center width=900px>
+	<!-- <table align=center width=800px> -->
+	<!-- 	<br> -->
+	<!-- 	<tr><center> -->
+	<!-- 		<span style="font&#45;size:28px">&#38;nbsp;<a href='https://github.com/richzhang/webpage&#45;template'>[GitHub]</a> -->
+	<!-- 		</center> -->
+	<!-- 	</span> -->
+	<!-- </table> -->
+	<center><h2>Training</h2></center>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h1>Loss function</h1></center>
-					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both sim and real domain.</p>
-
-					<p>We formulate this task to adapt from GTA V data to cityscapes data as the following loss function:</p>
-					$$L = \lambda_{seg} L_{seg} + \lambda_{rec} L_{rec} + \lambda_{adv} L_{adv}$$
-					<br>
-					<p>where L_seg is the segmentation loss for synthetic data, L_rec is the reconstruction loss for the real images and L_adv is the adversarial loss from the discriminator. The different losses are weighted with hyperparameters lambda_seg, lambda_rec and lambda_adv. </p>
+					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both sim and real domain. We formulate this task to adapt from GTA V data to cityscapes data as the following loss function:</p>
+					<p>$$L = \lambda_{seg} L_{seg} + \lambda_{rec} L_{rec} + \lambda_{adv} L_{adv}$$</p>
+					<p>where L_seg is the segmentation loss for synthetic data, L_rec is the reconstruction loss for the real images and L_adv is the adversarial loss from the discriminator. The different losses are weighted with hyperparameters \(\lambda_{seg}\), \(\lambda_{rec}\) and \(\lambda_{adv}\). </p>
 				</left>
 			</td>
 		</tr>
+	</table>
+	<center><h3>Reconstruction</h3></center>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h2>Reconstruction</h2></center>
 					<p>For the reconstruction loss we use an L2 distance between the reconstructed image and target cityscapes image.</p>
-					$$L_{rec} = ||F(x) - x||^2_2$$</br>
+					$$L_{rec} = ||F(x) - x||^2_2$$
 				</left>
 			</td>
 		</tr>
+	</table>
+	<center><h3>Adversarial loss</h3></center>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h2>Adversarial loss</h2></center>
 					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes as input image features and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features so the discriminator is fooled.</p>
-					$$L_{adv} = ||D(z) – 1||^2_2$$</br>
-					<p>Where z is the image features, D is the discriminator</p>
-					<p>This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
+					$$L_{adv} = ||D(z) – 1||^2_2$$
+					<p>where z is the image features, \(D\) is the discriminator. This least squares GAN loss is based on [6] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
 				</left>
 			</td>
 		</tr>
 	</table>
 	<hr>
 
-	<table align=center width=900px>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
 					<center><h1>Experiments</h1></center>
-					We train our method on approx. 10% of GTAV dataset and evaluate on cityscapes data. [Dataset stats: num of images, epochs trained for etc.]
+					We train our method on approx. 10% of GTAV dataset and evaluate on cityscapes data. [Dataset stats: num of images, epochs trained for, learning rate, batch size, etc.]
 				</left>
 			</td>
 		</tr>
 		<tr>
-			<td><center><img src="./resources/performance_miou.png"/></center></td>
+			<td>
+				<center>
+					<img src="./resources/performance_miou.png"/>
+					<img src="./resources/perclassiou.png"/>
+				</center>
+			</td>
 		</tr>
 		<tr>
 			<td width=400px>
 				<left>
 					<center><h2>Quantitative results</h2></center>
-					We compare our method with the baseline which learns semantic segmentation on GTA V and naively transfers to cityscapes in the first column. SAFL outperforms this baseline as seen with the second and third column. Adding adversarial loss improves performance over just using reconstruction. However, we found that removing the reconstruction auxiliary output and just doing segmentation with adversarial loss does better (in the 4th and 5th cols). The last column shows the oracle performance which is the deeplab network trained on cityscapes data.
+					We compare our method with the baseline which learns semantic segmentation on GTA V and naively transfers to cityscapes in the first column. SAFL outperforms this baseline as seen with the second and third column. Adding adversarial loss improves performance over just using reconstruction. However, we found that removing the reconstruction auxiliary output and just doing segmentation with adversarial loss does better (in the 4th and 5th cols). The last column shows the oracle performance which is the deeplab network trained on cityscapes data. Comparing to CyCADA shows that our method does slightly worse. However, for our results, due to time constraint, we did not utilize the full dataset.
 				</left>
 			</td>
 		</tr>
@@ -370,29 +356,47 @@
 
 	<br>
 	<table class="tableizer-table" align=center>
-	<thead><tr class="tableizer-firstrow"><th>Class</th><th>Baseline</th><th>SAFL</th><th>Deeplab + seg adv</th><th>Deeplab + feat adv</th><th>Oracle</th></tr></thead><tbody>
-	 <tr><td>road</td><td>12.73</td><td>87.25</td><td>85.12</td><td>91.527</td><td>93.06</td></tr>
-	 <tr><td>sidewalk</td><td>19.98</td><td>9.99</td><td>1.11</td><td>15.375</td><td>60.34</td></tr>
-	 <tr><td>building</td><td>75.41</td><td>75.64</td><td>76.12</td><td>72.404</td><td>81.57</td></tr>
-	 <tr><td>wall</td><td>15.32</td><td>16.85</td><td>15.95</td><td>1.696</td><td>42.85</td></tr>
-	 <tr><td>fence</td><td>17.68</td><td>3.74</td><td>12.4</td><td>21.525</td><td>34.05</td></tr>
-	 <tr><td>pole</td><td>16.99</td><td>12.6</td><td>17.86</td><td>18.886</td><td>15.97</td></tr>
-	 <tr><td>traffic light</td><td>18.1</td><td>14.86</td><td>18.93</td><td>22.642</td><td>29.24</td></tr>
-	 <tr><td>traffic sign</td><td>12.65</td><td>3.66</td><td>7.47</td><td>17.379</td><td>36.44</td></tr>
-	 <tr><td>vegetation</td><td>77.83</td><td>76.1</td><td>77.27</td><td>81.499</td><td>81.1</td></tr>
-	 <tr><td>terrain</td><td>11.43</td><td>27.57</td><td>24.65</td><td>33.558</td><td>45.25</td></tr>
-	 <tr><td>sky</td><td>77.74</td><td>69.59</td><td>71.42</td><td>55.217</td><td>82.27</td></tr>
-	 <tr><td>person</td><td>31.88</td><td>33.01</td><td>40.42</td><td>35.463</td><td>47.24</td></tr>
-	 <tr><td>rider</td><td>0.17</td><td>1.57</td><td>4.99</td><td>23.984</td><td>29.44</td></tr>
-	 <tr><td>car</td><td>20.01</td><td>71.88</td><td>79.62</td><td>80.481</td><td>76.93</td></tr>
-	 <tr><td>truck</td><td>5.98</td><td>12.49</td><td>26.53</td><td>36.229</td><td>42.83</td></tr>
-	 <tr><td>bus</td><td>8.98</td><td>3.23</td><td>19.07</td><td>16.913</td><td>50.64</td></tr>
-	 <tr><td>train</td><td>1.37</td><td>11.29</td><td>0.19</td><td>0</td><td>30.36</td></tr>
-	 <tr><td>motorcycle</td><td>0.73</td><td>0</td><td>9.63</td><td>20.736</td><td>29.02</td></tr>
-	 <tr><td>bicycle</td><td>0.09</td><td>0.72</td><td>0.5</td><td>18.088</td><td>46.68</td></tr>
-	</tbody></table>
+	<style type="text/css">
+	table.tableizer-table {
+		font-size: 12px;
+		border: 1px solid #CCC; 
+		font-family: Arial, Helvetica, sans-serif;
+	} 
+	.tableizer-table td {
+		padding: 4px;
+		margin: 3px;
+		border: 1px solid #CCC;
+	}
+	.tableizer-table th {
+		background-color: #000000; 
+		color: #FFF;
+		font-weight: bold;
+	}
+</style>
+<table class="tableizer-table" align=center>
+<thead><tr class="tableizer-firstrow"><th>Class</th><th>Baseline</th><th>SAFL</th><th>Deeplab + seg adv</th><th>Deeplab + feat adv</th><th>Oracle</th><th>CyCADA*</th></tr></thead><tbody>
+ <tr><td>road</td><td>12.73</td><td>87.25</td><td>85.12</td><td>91.527</td><td>93.06</td><td>80.97</td></tr>
+ <tr><td>sidewalk</td><td>19.98</td><td>9.99</td><td>1.11</td><td>15.375</td><td>60.34</td><td>31.21</td></tr>
+ <tr><td>building</td><td>75.41</td><td>75.64</td><td>76.12</td><td>72.404</td><td>81.57</td><td>79.53</td></tr>
+ <tr><td>wall</td><td>15.32</td><td>16.85</td><td>15.95</td><td>1.696</td><td>42.85</td><td>22.41</td></tr>
+ <tr><td>fence</td><td>17.68</td><td>3.74</td><td>12.4</td><td>21.525</td><td>34.05</td><td>13.91</td></tr>
+ <tr><td>pole</td><td>16.99</td><td>12.6</td><td>17.86</td><td>18.886</td><td>15.97</td><td>25.53</td></tr>
+ <tr><td>traffic light</td><td>18.1</td><td>14.86</td><td>18.93</td><td>22.642</td><td>29.24</td><td>24.97</td></tr>
+ <tr><td>traffic sign</td><td>12.65</td><td>3.66</td><td>7.47</td><td>17.379</td><td>36.44</td><td>20.62</td></tr>
+ <tr><td>vegetation</td><td>77.83</td><td>76.1</td><td>77.27</td><td>81.499</td><td>81.1</td><td>75.61</td></tr>
+ <tr><td>terrain</td><td>11.43</td><td>27.57</td><td>24.65</td><td>33.558</td><td>45.25</td><td>24.47</td></tr>
+ <tr><td>sky</td><td>77.74</td><td>69.59</td><td>71.42</td><td>55.217</td><td>82.27</td><td>71.79</td></tr>
+ <tr><td>person</td><td>31.88</td><td>33.01</td><td>40.42</td><td>35.463</td><td>47.24</td><td>52.27</td></tr>
+ <tr><td>rider</td><td>0.17</td><td>1.57</td><td>4.99</td><td>23.984</td><td>29.44</td><td>12.84</td></tr>
+ <tr><td>car</td><td>20.01</td><td>71.88</td><td>79.62</td><td>80.481</td><td>76.93</td><td>79.54</td></tr>
+ <tr><td>truck</td><td>5.98</td><td>12.49</td><td>26.53</td><td>36.229</td><td>42.83</td><td>30.45</td></tr>
+ <tr><td>bus</td><td>8.98</td><td>3.23</td><td>19.07</td><td>16.913</td><td>50.64</td><td>27.75</td></tr>
+ <tr><td>train</td><td>1.37</td><td>11.29</td><td>0.19</td><td>0</td><td>30.36</td><td>3.18</td></tr>
+ <tr><td>motorcycle</td><td>0.73</td><td>0</td><td>9.63</td><td>20.736</td><td>29.02</td><td>22.2</td></tr>
+ <tr><td>bicycle</td><td>0.09</td><td>0.72</td><td>0.5</td><td>18.088</td><td>46.68</td><td>7.23</td></tr>
+</tbody></table>
 	<br>
-	<table align=center width=900px>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
@@ -401,11 +405,17 @@
 			</td>
 		</tr>
 	</table>
-	<hr>
-	<center><h1>Qualitative results</h1></center>
+
+	<table align=center width=850px>
+		<tr>
+			<td width=400px>
+				<center><h2>Qualitative results</h2></center>
+			</td>
+		</tr>
+	</table>
 	<hr>
 	<center><h1>Discussion</h1></center>
-	<table align=center width=900px>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
@@ -417,20 +427,32 @@
 	<hr>
 	<br>
 	<center><h1>Future Work</h1></center>
-	We currently use a features from the final layer of the resnet backbone before the ASPP layers for feature space adversarial loss. We can use different intermediate features to see how it affects performance. Also, using different auxillary task than reconstruction could be more suited to this domain adaptation task. For example, we can investigate tasks such as denoising or inpainting. Similarly, we can use contrastive learning methods to learn good representation. Finally, we can use a loss that more directly optimzes the mean IOU with respect to class imbalance. We leave these experiments as future work.
-	<hr>
-
-	<table align=center width=900px>
+	<table align=center width=850px>
 		<tr>
 			<td width=400px>
 				<left>
-					<center><h1>Acknowledgements</h1></center>
-					This template was originally made by <a href="http://web.mit.edu/phillipi/">Phillip Isola</a> and <a href="http://richzhang.github.io/">Richard Zhang</a> for a <a href="http://richzhang.github.io/colorization/">colorful</a> ECCV project; the code can be found <a href="https://github.com/richzhang/webpage-template">here</a>.
-				</left>
+			We currently use features from the final layer of the resnet backbone before the ASPP layers for feature space adversarial loss. We can use different intermediate features to see how it affects performance. Also, using different auxillary task than reconstruction could be more suited to this domain adaptation task. For example, we can investigate tasks such as denoising or inpainting. Similarly, we can use contrastive learning methods to learn good representation. Finally, we can use a loss that more directly optimzes the mean IOU with respect to class imbalance. We leave these experiments as future work.
 			</td>
 		</tr>
 	</table>
-
+	<hr>
+	<br>
+	<center><h1>References</h1></center>
+	<table align=center width=850px>
+		<tr>
+			<td width=400px>
+				<ol>
+					<li>Pathak, Deepak, Philipp Krahenbuhl, Jeff Donahue, Trevor Darrell, and Alexei A. Efros. "Context encoders: Feature learning by inpainting." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 2536-2544. 2016.</li>
+					<li>Tsai, Yi-Hsuan, Wei-Chih Hung, Samuel Schulter, Kihyuk Sohn, Ming-Hsuan Yang, and Manmohan Chandraker. "Learning to adapt structured output space for semantic segmentation." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 7472-7481. 2018.</li>
+					<li>Zhang, Pan, Bo Zhang, Ting Zhang, Dong Chen, Yong Wang, and Fang Wen. "Prototypical Pseudo Label Denoising and Target Structure Learning for Domain Adaptive Semantic Segmentation." arXiv preprint arXiv:2101.10979 (2021).</li>
+					<li>Ronneberger, Olaf, Philipp Fischer, and Thomas Brox. "U-net: Convolutional networks for biomedical image segmentation." In International Conference on Medical image computing and computer-assisted intervention, pp. 234-241. Springer, Cham, 2015.</li>
+					<li>Chen, Liang-Chieh, George Papandreou, Florian Schroff, and Hartwig Adam. "Rethinking atrous convolution for semantic image segmentation." arXiv preprint arXiv:1706.05587 (2017).</li>
+					<li>Mao, Xudong, Qing Li, Haoran Xie, Raymond YK Lau, Zhen Wang, and Stephen Paul Smolley. "Least squares generative adversarial networks." In Proceedings of the IEEE international conference on computer vision, pp. 2794-2802. 2017.</li>
+				</ol>
+			</td>
+		</tr>
+	</table>
+	<hr>
 <br>
 </body>
 </html>
