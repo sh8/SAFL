@@ -234,7 +234,7 @@
 		<center><h1>Abstract</h1></center>
 		<tr>
 			<td>
-				We propose a novel domain adaptation method, SAFL for semantic segmentation. Assuming we only have an access to ground-truth segmentation maps in a source domain, SAFL learns the features of the source (synthetic) and target (real) domains in a supervised and self-supervised manner respectively. For self-supervised training, we use image reconstruction to learn the features of the target domain without ground-truth labels. Our experimental results show that the self-supervised training via image reconstruction in the target domain helps our method improve the mIoU score in semantic segmentation significantly.
+				We propose a novel domain adaptation method, SAFL for semantic segmentation. Assuming we only have access to ground-truth segmentation maps in a source domain, SAFL learns the features of the source (synthetic) and the target (real) domains in a supervised and self-supervised manner respectively. For self-supervised training, we use image reconstruction to learn the features of the target domain without ground-truth labels. Our experimental results show that the self-supervised training via image reconstruction in the target domain helps our method improve the mIoU score in semantic segmentation significantly.
 			</td>
 		</tr>
 	</table>
@@ -260,7 +260,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<center>
 			<tr>
 				<td>
-		Semantic segmentation is a crucial task for safe autonomous driving. The recent methods for semantic segmentation generally use an encode-decoder architecture like UNet or Deeplab and its accuracy is improved day by day by using a novel network architecture. However, there is a fundamental problem that annotation cost of pixel-level segmentation maps is really huge. This problem makes it challenging to train a network with a dataset which has many conditions in terms of road types, weathers, and cameras. To solve this problem, semi-supervised semantic segmentation have been studied recently. Prior work of semi-supervised semantic segmentation makes use of adversarial learning, style transfer, pseudo-labeling. In this project, we investigate a novel way to learn features invariant to different domains.
+		Semantic segmentation is a crucial task for safe autonomous driving. The recent methods for semantic segmentation generally use an encode-decoder architecture like UNet or Deeplab and achieve increasingly higher accuracies with each new network architecture. However, there is a fundamental problem that there is a signficant financial cost to produce pixel-level segmentation annotations. This problem makes it challenging to produce a dataset with diversity in road types, weathers, and camera viewpoints. To solve this problem, semi-supervised semantic segmentation has been studied recently. Prior work of semi-supervised semantic segmentation makes use of adversarial learning, style transfer, pseudo-labeling. In this project, we investigate a novel way to learn features invariant to different domains.
 				</td>
 			</tr>
 		</center>
@@ -285,7 +285,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<center>
 			<tr>
 				<td>
-					We show a high-level overview of SAFL in the figure above. The network architecture is really simple. SAFL is composed of four subnetworks: an encoder, a semantic segmentation decoder, an image inpainting decoder, and a discriminator. The encoder is based on the the ResNet-101 backbone and the decoder is based on the DeepLabV3 semantic segmentation architecture. During training, all images are fed into the encoder first, and then the encoded feature is given to two decoders to predict the semantic segmentation or image painting. The discriminator network is used to align the distributions of the features between the synthetic and real images. We plan to perform some ablation studies to show the effectiveness of SAFL: 1) Remove the discriminator, 2) Use 2D image reconstruction instead of image inpainting, 3) Use a different backbone network like ResNext or a Transformer 4) Train using additional in-the-wild city images. We aim to achieve state of the art results with our unified but simple method for adaptive semantic segmentation.
+					We show a high-level overview of SAFL in the figure above. The network architecture is really simple. SAFL is composed of four subnetworks: an encoder, a semantic segmentation decoder, an image inpainting decoder, and a discriminator. The encoder is based on the the ResNet-101 backbone and the decoder is based on the DeepLabV3 semantic segmentation architecture. During training, all images are fed into the encoder first, and then the encoded feature is given to two decoders to predict the semantic segmentation and image painting. The discriminator network is used to align the distributions of the features between the synthetic and real images. We plan to perform some ablation studies to show the effectiveness of SAFL: 1) Remove the discriminator, 2) Use 2D image reconstruction instead of image inpainting, 3) Use a different backbone network like ResNext or a Transformer 4) Train using additional in-the-wild city images. We aim to achieve state of the art results with our unified but simple method for adaptive semantic segmentation.
 				</td>
 			</tr>
 		</center>
@@ -303,7 +303,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both sim and real domain. We formulate this task to adapt from GTA V data to cityscapes data as the following loss function:</p>
+					<p>In order to solve the task, the model has to implicitly learn about semantics and develop image features that are broadly useful. The encoder learns features from cityscape images in a self-supervised fashion by reconstructing it and the adversarial loss from the discriminator forces the network to learn features that can work in both synthetic and real domains. We formulate this task to adapt from GTA V data to Cityscapes data with the following loss function:</p>
 					<p>$$L = \lambda_{seg} L_{seg} + \lambda_{rec} L_{rec} + \lambda_{adv} L_{adv}$$</p>
 					<p>where L_seg is the segmentation loss for synthetic data, L_rec is the reconstruction loss for the real images and L_adv is the adversarial loss from the discriminator. The different losses are weighted with hyperparameters \(\lambda_{seg}\), \(\lambda_{rec}\) and \(\lambda_{adv}\). </p>
 				</left>
@@ -315,7 +315,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-					<p>For the reconstruction loss we use an L2 distance between the reconstructed image and target cityscapes image.</p>
+					<p>For the reconstruction loss we use an L2 distance between the reconstructed image and target Cityscapes image.</p>
 					$$L_{rec} = ||F(x) - x||^2_2$$
 				</left>
 			</td>
@@ -326,9 +326,9 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes as input image features and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features so the discriminator is fooled.</p>
+					<p>We also add an adversarial loss on the feature space based on Generative Adversarial Networks. The discriminator takes image features as input and tries to classify them as real or synthetic. The goal is to learn features that are similar to real image features, so the discriminator is fooled.</p>
 					$$L_{adv} = ||D(z) – 1||^2_2$$
-					<p>where z is the image features, \(D\) is the discriminator. This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images which are very different from real images can lead to vanishing gradients.</p>
+					<p>where z is the image features, \(D\) is the discriminator. This least squares GAN loss is based on [ “Least Squares Generative Adversarial Networks.”] which observed that using binary cross entropy loss for generated images, which are very different from real images, can lead to vanishing gradients.</p>
 				</left>
 			</td>
 		</tr>
@@ -340,7 +340,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 			<td width=400px>
 				<left>
 					<center><h1>Experiments</h1></center>
-					We train our method on approx. 10% of GTAV dataset and evaluate on cityscapes data. [Dataset stats: num of images, epochs trained for, learning rate, batch size, etc.]
+					We train our method on approximately 10% of the GTAV dataset and evaluate on Cityscapes data. [Dataset stats: num of images, epochs trained for, learning rate, batch size, etc.]
 				</left>
 			</td>
 		</tr>
@@ -356,7 +356,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 			<td width=400px>
 				<left>
 					<center><h2>Quantitative results</h2></center>
-					We compare our method with the baseline which learns semantic segmentation on GTA V and naively transfers to cityscapes in the first column. SAFL outperforms this baseline as seen with the second and third column. Adding adversarial loss improves performance over just using reconstruction. However, we found that removing the reconstruction auxiliary output and just doing segmentation with adversarial loss does better (in the 4th and 5th cols). The last column shows the oracle performance which is the deeplab network trained on cityscapes data. Comparing to CyCADA [7] shows that our method does slightly worse. However, for our results, due to time constraint, we did not utilize the full dataset.
+					We compare our method with the baseline which learns semantic segmentation on GTA V and naively transfers to Cityscapes in the first column. SAFL outperforms this baseline as seen with the second and third column. Adding adversarial loss improves performance over just using reconstruction. However, we found that removing the reconstruction auxiliary output and just performing segmentation with adversarial loss does better (in the 4th and 5th cols). The last column shows the oracle performance which is the deeplab network trained on cityscapes data. Comparing to CyCADA [7] shows that our method does slightly worse. However, for our results, due to time constraint, we did not utilize the full dataset.
 				</left>
 			</td>
 		</tr>
@@ -408,7 +408,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-					Table 1 shows the per class IOU for the different methods. We also tried output space adversarial loss (deeplab + seg adv) but found that feature space adversarial loss (deeplab + feat adv) had better performance.
+					Table 1 shows the per class IOU for the different methods. We also tried output space adversarial loss (deeplab + seg adv) ["Learning to Adapt Structured Output Space for Semantic Segmentation"] but found that feature space adversarial loss (deeplab + feat adv) had better performance.
 				</left>
 			</td>
 		</tr>
@@ -427,7 +427,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-					We found that adding adversarial learning improves the performance of adaptive segmentation. However, when comparing SAFL with adversarial loss with deeplab with adversarial loss, it seems that reconstruction may not be the best self-supervised task to learn a good representation. Looking at the per class IOUs we see that some classes, such as train, bycycle, are particularly difficult. This is probably due to the classes having few examples in the GTA5 dataset. Another challenge is memory limitation. We have to use smaller batch size and resized images during training to avoid running out of memory which can lead to less stable training and worse per pixel accuracy.
+					We found that adding adversarial learning improves the performance of adaptive segmentation. However, when comparing SAFL + adversarial loss to deeplab + adversarial loss, it seems that reconstruction may not be the best self-supervised task to learn a good representation. Looking at the per class IOUs we see that some classes, such as train and bycycle, are particularly difficult. This is probably due to the classes having few examples in the GTA5 dataset. Another challenge is memory limitation. We have to use smaller batch size and resized images during training to avoid running out of memory which can lead to less stable training and worse per pixel accuracy.
 				</left>
 			</td>
 		</tr>
@@ -439,7 +439,7 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 		<tr>
 			<td width=400px>
 				<left>
-			We currently use features from the final layer of the resnet backbone before the ASPP layers for feature space adversarial loss. We can use different intermediate features to see how it affects performance. Also, using different auxillary task than reconstruction could be more suited to this domain adaptation task. For example, we can investigate tasks such as denoising or inpainting. Similarly, we can use contrastive learning methods to learn good representation. Finally, we can use a loss that more directly optimzes the mean IOU with respect to class imbalance. We leave these experiments as future work.
+			We currently use features from the final layer of the resnet backbone before the ASPP layers for feature space adversarial loss. We can use different intermediate features to see how it affects performance. Also, using different auxillary tasks than reconstruction could be more suited to this domain adaptation task. For example, we can investigate tasks such as denoising or inpainting. Similarly, we can use contrastive learning methods to learn good representation. Finally, we can use a loss that more directly optimzes the mean IOU with respect to class imbalance. We leave these experiments as future work.
 			</td>
 		</tr>
 	</table>
@@ -457,6 +457,8 @@ Another merit of Syn2Real is its ability to generate synthetic images diverse in
 					<li>Chen, Liang-Chieh, George Papandreou, Florian Schroff, and Hartwig Adam. "Rethinking atrous convolution for semantic image segmentation." arXiv preprint arXiv:1706.05587 (2017).</li>
 					<li>Mao, Xudong, Qing Li, Haoran Xie, Raymond YK Lau, Zhen Wang, and Stephen Paul Smolley. "Least squares generative adversarial networks." In Proceedings of the IEEE international conference on computer vision, pp. 2794-2802. 2017.</li>
 					<li>Hoffman, Judy, Eric Tzeng, Taesung Park, Jun-Yan Zhu, Phillip Isola, Kate Saenko, Alexei Efros, and Trevor Darrell. "Cycada: Cycle-consistent adversarial domain adaptation." In International conference on machine learning, pp. 1989-1998. PMLR, 2018.</li>
+					<li>Yi-Hsuan Tsai*, Wei-Chih Hung*, Samuel Schulter, Kihyuk Sohn, Ming-Hsuan Yang and Manmohan Chandraker. "Learning to Adapt Structured Output Space for Semantic Segmentation."" 
+					IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2018.</li>
 				</ol>
 			</td>
 		</tr>
